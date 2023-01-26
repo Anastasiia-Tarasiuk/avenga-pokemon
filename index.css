@@ -1,0 +1,28 @@
+.pokemon_list {
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+li {
+    list-style-type: none;
+}
+
+.pokemon_image {
+    width: 500px;
+    height: 500px;
+    
+}
+
+button {
+    display: block;
+    margin: 0 auto;
+}
+
+.vs_logo {
+    width:100px;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50% -50%);
+}
