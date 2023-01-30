@@ -1,3 +1,8 @@
+body {
+    font-family: 'Acme', sans-serif;
+}
+
+
 .pokemon_list, 
 .fight_list { 
     display: flex;
@@ -10,14 +15,18 @@ li {
 }
 
 .pokemon_image {
-    width: 500px;
-    height: 500px;
-    
+    width: 400px;
+    height: 400px;
 }
 
 button {
+    font-family: 'Acme', sans-serif;
     display: block;
     margin: 0 auto;
+    width: 400px;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
 }
 
 .vs_logo {
@@ -30,7 +39,6 @@ button {
 
 .health1,
 .health2 {
-
     background-image: linear-gradient(to right, red, yellow);
 }
 

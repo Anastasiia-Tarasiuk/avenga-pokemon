@@ -1,12 +1,10 @@
+const baseURL = 'https://pokeapi.co/api/v2/pokemon/';
+
 const findPokemonButtonEl = document.querySelector('.find_pokemon_btn');
 const startFightButtonEl = document.querySelector('.start_fight_btn');
-const baseURL = 'https://pokeapi.co/api/v2/pokemon/';
 const listEl = document.querySelector('.pokemon_list');
 const winnerNameEl = document.querySelector('.winner');
-
-
 const fightEl = document.querySelector('.fight_list');
-
 const vsLogoEl = document.querySelector('.vs_logo');
 
 winnerNameEl.style.display = "none";
@@ -51,13 +49,11 @@ function onStartFightButtonClick() {
     maxDefense1 = Number(document.querySelector('.pokemon1 .defense').innerText);
     maxSpecialDefense1 = Number(document.querySelector('.pokemon1 .special_defense').innerText);
 
-
     maxHealth2 = Number(document.querySelector('.pokemon2 .health').innerText);
     maxAttack2 = Number(document.querySelector('.pokemon2 .attack').innerText);
     maxSpecialAttack2 = Number(document.querySelector('.pokemon2 .special_attack').innerText);
     maxDefense2 = Number(document.querySelector('.pokemon2 .defense').innerText);
     maxSpecialDefense2 = Number(document.querySelector('.pokemon2 .special_defense').innerText);
-
     
     setFightStats();
     
@@ -103,7 +99,6 @@ function onStartFightButtonClick() {
         setTimeout(() => {demage2El.style.display = "none";}, 1000);
     }
 
-
     if (healthIndicatorEl1.style.display === "none" || healthIndicatorEl2.style.display === "none") {
         startFightButtonEl.style.display = "none";
         if (health1 > health2) {
@@ -115,11 +110,7 @@ function onStartFightButtonClick() {
                 winnerCongratulate(2);
             }, 1000);
         }
-        
     }
-
-
-
 }
 
 function winnerCongratulate(winner) {
@@ -151,15 +142,11 @@ function winnerCongratulate(winner) {
         default:
             break;
     }
-
-
     
     vsLogoEl.style.display = "none";
     
     winnerNameEl.textContent = `${winnerName.textContent} wins!`;
     winnerNameEl.style.display = "block";
-    
-
 }
 
 function createPokemon(index) {
