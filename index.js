@@ -126,6 +126,7 @@ function winnerCongratulate(winner) {
     fightEl.style.display = "none";
     let looserPokemon = null;
     let winnerPokemon = null;
+    let winnerName = null;
     switch (winner) {
         case 1:
             looserPokemon = document.querySelector('.pokemon2');
@@ -135,6 +136,7 @@ function winnerCongratulate(winner) {
             document.querySelector('.name1').style.display = "none";
             document.querySelector('.name2').style.display = "none";
             winnerPokemon = document.querySelector('.pokemon1');
+            winnerName = document.querySelector('.name1');
             break;
         case 2:
             looserPokemon = document.querySelector('.pokemon1');
@@ -144,12 +146,18 @@ function winnerCongratulate(winner) {
             document.querySelector('.name1').style.display = "none";
             document.querySelector('.name2').style.display = "none";
             winnerPokemon = document.querySelector('.pokemon2');
+            winnerName = document.querySelector('.name2');
             break;
         default:
             break;
     }
 
+
+    
     vsLogoEl.style.display = "none";
+    
+    winnerNameEl.textContent = `${winnerName.textContent} wins!`;
+    winnerNameEl.style.display = "block";
     
 
 }
