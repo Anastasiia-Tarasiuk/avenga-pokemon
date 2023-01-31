@@ -43,6 +43,27 @@ function onStartFightButtonClick() {
     startFightButtonEl.textContent = ` ${"Round " + round}`;
     round = round + 1;
     
+    // const pokemonStats = [".health", ".attack", ".special_attack", ".defense", ".special_defense"]
+
+    // const pokemon1values = {
+    //     maxHealth1,
+    //     maxAttack1,
+    //     maxSpecialAttack1,
+    //     maxDefense1,
+    //     maxSpecialDefense1
+    // }
+
+    // const pokemon2values = {
+    //     maxHealth2,
+    //     maxAttack2,
+    //     maxSpecialAttack2,
+    //     maxDefense2,
+    //     maxSpecialDefense2
+    // }
+    
+    // getInnerText(".pokemon1", pokemon1values, pokemonStats);
+    // getInnerText(".pokemon2", pokemon2values, pokemonStats);
+
     maxHealth1 = Number(document.querySelector('.pokemon1 .health').innerText);
     maxAttack1 = Number(document.querySelector('.pokemon1 .attack').innerText);
     maxSpecialAttack1 = Number(document.querySelector('.pokemon1 .special_attack').innerText);
@@ -117,40 +138,39 @@ function winnerCongratulate(winner) {
     fightEl.style.display = "none";
     let looserPokemon = null;
     let winnerPokemon = null;
-    let winnerName = null;
+    let winnerName = null; 
+    
+    document.querySelector('.stats2').style.display = "none";
+    document.querySelector('.stats1').style.display = "none";
+    document.querySelector('.name1').style.display = "none";
+    document.querySelector('.name2').style.display = "none";
+
     switch (winner) {
         case 1:
             looserPokemon = document.querySelector('.pokemon2');
-            looserPokemon.style.display = "none";
-            document.querySelector('.stats2').style.display = "none";
-            document.querySelector('.stats1').style.display = "none";
-            document.querySelector('.name1').style.display = "none";
-            document.querySelector('.name2').style.display = "none";
             winnerPokemon = document.querySelector('.pokemon1');
             winnerName = document.querySelector('.name1');
             break;
         case 2:
             looserPokemon = document.querySelector('.pokemon1');
-            looserPokemon.style.display = "none";
-            document.querySelector('.stats2').style.display = "none";
-            document.querySelector('.stats1').style.display = "none";
-            document.querySelector('.name1').style.display = "none";
-            document.querySelector('.name2').style.display = "none";
             winnerPokemon = document.querySelector('.pokemon2');
             winnerName = document.querySelector('.name2');
             break;
         default:
             break;
     }
-    
+
+    looserPokemon.style.display = "none";
+
     vsLogoEl.style.display = "none";
     
-    winnerNameEl.textContent = `${winnerName.textContent} wins!`;
+    winnerNameEl.textContent = (`${(winnerName.textContent)} wins!`).toUpperCase();
     winnerNameEl.style.display = "block";
 }
 
 function createPokemon(index) {
     const randomNumber = getRandomNumber(1, 1008);
+    const url = baseURL + randomNumber;
     
     let health = null;
     let attack = null;
@@ -159,9 +179,8 @@ function createPokemon(index) {
     let special_attack = null;
     let special_defense = null;
         
-    const url = baseURL + randomNumber;
-   
     const xhr = new XMLHttpRequest();
+
     xhr.open('GET', url);
 
     xhr.send();
@@ -213,7 +232,7 @@ function createPokemon(index) {
                         <span class=${'"demageValue'+(index+1)}"></span>
                     </div>
                     <div class=${"stats"+(index+1)}>
-                    <p>Max Health: <span class="health">${health}</span></p>
+                    <p>Health: <span class="health">${health}</span></p>
                     <p>Max Attack: <span class="attack">${attack}</span></p>
                     <p>Max Special attack: <span class="special_attack">${special_attack}</span></p>
                     <p>Max Defense: <span class="defense">${defense}</span></p>
@@ -221,7 +240,6 @@ function createPokemon(index) {
                     </div>
                 </li>`
             )
-
 
             fightEl.insertAdjacentHTML('beforeend', 
                 `<li class=${'pokemon_fight'+(index+1)}>
@@ -281,4 +299,13 @@ function setFightStats() {
     useSpecialPower1 = false;
     useSpecialPower2 = false;
 }
+
+// function getInnerText(pokemon, pokemonValues, pokemonStats) {
+//     let index = 0;
+        
+//     for (const value in pokemonValues) {
+//         pokemonValues[value] = Number(document.querySelector(`${pokemon} ${pokemonStats[index]}`).innerText);
+//         index = index + 1;
+//     }
+// }
 
