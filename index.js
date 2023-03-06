@@ -45,21 +45,21 @@ function onStartFightButtonClick() {
     
     // const pokemonStats = [".health", ".attack", ".special_attack", ".defense", ".special_defense"]
 
-    // const pokemon1values = {
-    //     maxHealth1,
-    //     maxAttack1,
-    //     maxSpecialAttack1,
-    //     maxDefense1,
-    //     maxSpecialDefense1
-    // }
+    const pokemon1values = {
+        maxHealth1,
+        maxAttack1,
+        maxSpecialAttack1,
+        maxDefense1,
+        maxSpecialDefense1,
+    }
 
-    // const pokemon2values = {
-    //     maxHealth2,
-    //     maxAttack2,
-    //     maxSpecialAttack2,
-    //     maxDefense2,
-    //     maxSpecialDefense2
-    // }
+    const pokemon2values = {
+        maxHealth2,
+        maxAttack2,
+        maxSpecialAttack2,
+        maxDefense2,
+        maxSpecialDefense2
+    }
     
     // getInnerText(".pokemon1", pokemon1values, pokemonStats);
     // getInnerText(".pokemon2", pokemon2values, pokemonStats);
@@ -186,7 +186,7 @@ function createPokemon(index) {
     xhr.send();
     
     xhr.onload = function () {        
-        if (xhr.status != 200) { 
+        if (xhr.status !== 200) { 
             console.log(`Помилка ${xhr.status}: ${xhr.statusText}`); 
         } else { 
             const response = JSON.parse(xhr.response);
