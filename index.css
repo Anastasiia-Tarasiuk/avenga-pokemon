@@ -1,8 +1,23 @@
 body {
     font-family: 'Acme', sans-serif;
-    padding: 20px;
+    padding: 10px;
+    margin: 0;
+    box-sizing: border-box;
 }
 
+p, 
+ul {
+    margin: 0;  
+    padding: 0;
+}
+
+.pokemon_list {
+    margin-bottom: 20px;
+}
+
+.fight_list{
+    text-align: center;
+}
 
 .pokemon_list, 
 .fight_list { 
@@ -12,12 +27,17 @@ body {
 
 li {
     list-style-type: none;
-
 }
 
 .pokemon_image {
-    width: 400px;
-    height: 400px;
+    width: 300px;
+    height: 300px;
+    margin-bottom: 20px;
+}
+
+.stats1, 
+.stats2 {
+    text-align: center;
 }
 
 button {
@@ -38,7 +58,7 @@ button {
     position: absolute;
     top: 30%;
     left: 50%;
-    transform: translate(-50% -50%);
+    transform: translate(-50%, -50%);
 }
 
 .health1,
@@ -78,4 +98,16 @@ button {
     display: block;
     margin: 60px auto 0;
 
+}
+
+.wrapper {
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    height: 20px;
+    width: 100%;
+}
+
+.start_fight_btn {
+    margin-bottom: 20px;
 }

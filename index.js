@@ -8,6 +8,8 @@ const fightEl = document.querySelector('.fight_list');
 const vsLogoEl = document.querySelector('.vs_logo');
 const logoPokemonEl = document.querySelector('.logo_pokemon');
 
+
+
 winnerNameEl.style.display = "none";
 fightEl.style = "display: none;"
 startFightButtonEl.style.display = "none";
@@ -39,6 +41,7 @@ function onFindPokemonButtonClick() {
     round = 1;
     startFightButtonEl.innerHTML = "Start a fight";
     logoPokemonEl.style.display = "none";
+    startFightButtonEl.removeAttribute('disabled');
 
     for (let index = 0; index < 2; index++) {
         createPokemon(index);        
@@ -53,21 +56,21 @@ function onStartFightButtonClick() {
     
     // const pokemonStats = [".health", ".attack", ".special_attack", ".defense", ".special_defense"]
 
-    const pokemon1values = {
-        maxHealth1,
-        maxAttack1,
-        maxSpecialAttack1,
-        maxDefense1,
-        maxSpecialDefense1,
-    }
+    // const pokemon1values = {
+    //     maxHealth1,
+    //     maxAttack1,
+    //     maxSpecialAttack1,
+    //     maxDefense1,
+    //     maxSpecialDefense1,
+    // }
 
-    const pokemon2values = {
-        maxHealth2,
-        maxAttack2,
-        maxSpecialAttack2,
-        maxDefense2,
-        maxSpecialDefense2
-    }
+    // const pokemon2values = {
+    //     maxHealth2,
+    //     maxAttack2,
+    //     maxSpecialAttack2,
+    //     maxDefense2,
+    //     maxSpecialDefense2
+    // }
     
     // getInnerText(".pokemon1", pokemon1values, pokemonStats);
     // getInnerText(".pokemon2", pokemon2values, pokemonStats);
@@ -86,8 +89,8 @@ function onStartFightButtonClick() {
     
     setFightStats();
     
-    let health1 = document.querySelector('.pokemon_fight1 .health1').clientWidth;
-    let health2 = document.querySelector('.pokemon_fight2 .health2').clientWidth;
+    let health1 = document.querySelector('.pokemon_list .health1').clientWidth;
+    let health2 = document.querySelector('.pokemon_list .health2').clientWidth;
 
     const attack1 = Number(document.querySelector('.pokemon_fight1 .attack1').innerText);
     const defense1 = Number(document.querySelector('.pokemon_fight1 .defense1').innerText);
@@ -103,8 +106,8 @@ function onStartFightButtonClick() {
     const demage1El = document.querySelector(".demageWrapper1");
     const demage2El = document.querySelector(".demageWrapper2");
 
-    const healthIndicatorEl1 = document.querySelector('.pokemon_fight1 .health1');
-    const healthIndicatorEl2 = document.querySelector('.pokemon_fight2 .health2');
+    const healthIndicatorEl1 = document.querySelector('.pokemon_list .health1');
+    const healthIndicatorEl2 = document.querySelector('.pokemon_list .health2');
 
     if (demage1 > 0) {
         demageValue1El.textContent = demage1;
@@ -129,15 +132,22 @@ function onStartFightButtonClick() {
     }
 
     if (healthIndicatorEl1.style.display === "none" || healthIndicatorEl2.style.display === "none") {
-        startFightButtonEl.style.display = "none";
+        
+        startFightButtonEl.innerHTML = "Fight is over";
+        startFightButtonEl.setAttribute('disabled', '');
+
         if (health1 > health2) {
             setTimeout(() => {
                 winnerCongratulate(1);
-            }, 1000);
+                startFightButtonEl.style.display = "none";
+                document.querySelector('.wrapper').style.display = "none";
+            }, 2000);
         } else {
             setTimeout(() => {
                 winnerCongratulate(2);
-            }, 1000);
+                startFightButtonEl.style.display = "none";
+                document.querySelector('.wrapper').style.display = "none";
+            }, 2000);
         }
     }
 }
@@ -175,6 +185,7 @@ function winnerCongratulate(winner) {
     winnerNameEl.textContent = (`${(winnerName.textContent)} wins!`).toUpperCase();
     winnerNameEl.style.display = "block";
     findPokemonButtonEl.style.display = "block";
+    
 }
 
 function createPokemon(index) {
@@ -234,7 +245,11 @@ function createPokemon(index) {
             
             listEl.insertAdjacentHTML('beforeend',
                 `<li class=${'pokemon'+(index+1)}>
-                    <p class=${"name"+(index+1)}>${name}</p>
+                    <p class=${"name" + (index + 1)}>${name}</p>
+                    <div class="wrapper">
+                        <div class=${"health"+(index+1)} style="width: ${health}px; height: 22px; position: absolute; top: 0; left: 0;"></div>
+                        <div class=${"shadow"+(index+1)} style="width: ${health}px; height: 20px; position: absolute; top: 0; left: 0; border: 1px solid black;"></div>
+                    </div>
                     <img class="pokemon_image" src="${image_dream_world || image_home || 'images/image_default.png'}"/>
                     <div class=${'"demageWrapper'+(index+1)}" style="display: none">
                         <img class=${"demageImg"+(index+1)} src="images/demage.png" alt="Demage effect">
@@ -252,10 +267,6 @@ function createPokemon(index) {
 
             fightEl.insertAdjacentHTML('beforeend', 
                 `<li class=${'pokemon_fight'+(index+1)}>
-                    <div class="wrapper" style="position: relative;">
-                        <div class=${"health"+(index+1)} style="width: ${health}px; height: 22px; position: absolute; top: 0; left: 0;"></div>
-                        <div class=${"shadow"+(index+1)} style="width: ${health}px; height: 20px; position: absolute; top: 0; left: 0; border: 1px solid black;"></div>
-                    </div>
                     <p>Attack: <span class=${"attack"+(index+1)}></span></p>
                     <p>Defense: <span class=${"defense"+(index+1)}></span></p>
                 </li>`
