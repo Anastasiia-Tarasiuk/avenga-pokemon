@@ -6,6 +6,7 @@ const listEl = document.querySelector('.pokemon_list');
 const winnerNameEl = document.querySelector('.winner');
 const fightEl = document.querySelector('.fight_list');
 const vsLogoEl = document.querySelector('.vs_logo');
+const logoPokemonEl = document.querySelector('.logo_pokemon');
 
 winnerNameEl.style.display = "none";
 fightEl.style = "display: none;"
@@ -32,6 +33,13 @@ findPokemonButtonEl.addEventListener('click', onFindPokemonButtonClick);
 startFightButtonEl.addEventListener('click', onStartFightButtonClick);
 
 function onFindPokemonButtonClick() {
+    winnerNameEl.style.display = "none";
+    listEl.innerHTML = "";
+    fightEl.innerHTML = "";
+    round = 1;
+    startFightButtonEl.innerHTML = "Start a fight";
+    logoPokemonEl.style.display = "none";
+
     for (let index = 0; index < 2; index++) {
         createPokemon(index);        
     }
@@ -137,7 +145,7 @@ function onStartFightButtonClick() {
 function winnerCongratulate(winner) {
     fightEl.style.display = "none";
     let looserPokemon = null;
-    let winnerPokemon = null;
+    // let winnerPokemon = null;
     let winnerName = null; 
     
     document.querySelector('.stats2').style.display = "none";
@@ -166,6 +174,7 @@ function winnerCongratulate(winner) {
     
     winnerNameEl.textContent = (`${(winnerName.textContent)} wins!`).toUpperCase();
     winnerNameEl.style.display = "block";
+    findPokemonButtonEl.style.display = "block";
 }
 
 function createPokemon(index) {

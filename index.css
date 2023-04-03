@@ -1,5 +1,6 @@
 body {
     font-family: 'Acme', sans-serif;
+    padding: 20px;
 }
 
 
@@ -27,6 +28,9 @@ button {
     height: 40px;
     border-radius: 10px;
     border: none;
+    background-color: #2773ba;
+    color: #ffcc01;
+    font-size: 24px;
 }
 
 .vs_logo {
@@ -62,4 +66,16 @@ button {
     top: 50%;
     left: 50%;
     transform: translate(-50% -50%);
+}
+
+.winner {
+    text-align: center;
+    color: #ffcc01;
+    font-size: 36px;
+}
+
+.logo_pokemon {
+    display: block;
+    margin: 60px auto 0;
+
 }
