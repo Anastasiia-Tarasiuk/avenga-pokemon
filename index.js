@@ -8,8 +8,6 @@ const fightEl = document.querySelector('.fight_list');
 const vsLogoEl = document.querySelector('.vs_logo');
 const logoPokemonEl = document.querySelector('.logo_pokemon');
 
-
-
 winnerNameEl.style.display = "none";
 fightEl.style = "display: none;"
 startFightButtonEl.style.display = "none";
@@ -139,15 +137,11 @@ function onStartFightButtonClick() {
         if (health1 > health2) {
             setTimeout(() => {
                 winnerCongratulate(1);
-                startFightButtonEl.style.display = "none";
-                document.querySelector('.wrapper').style.display = "none";
-            }, 2000);
+            }, 1000);
         } else {
             setTimeout(() => {
                 winnerCongratulate(2);
-                startFightButtonEl.style.display = "none";
-                document.querySelector('.wrapper').style.display = "none";
-            }, 2000);
+            }, 1000);
         }
     }
 }
@@ -155,7 +149,7 @@ function onStartFightButtonClick() {
 function winnerCongratulate(winner) {
     fightEl.style.display = "none";
     let looserPokemon = null;
-    // let winnerPokemon = null;
+    let winnerPokemon = null;
     let winnerName = null; 
     
     document.querySelector('.stats2').style.display = "none";
@@ -184,8 +178,8 @@ function winnerCongratulate(winner) {
     
     winnerNameEl.textContent = (`${(winnerName.textContent)} wins!`).toUpperCase();
     winnerNameEl.style.display = "block";
-    findPokemonButtonEl.style.display = "block";
-    
+    findPokemonButtonEl.style.display = "block";    
+    [...document.querySelectorAll('.wrapper')].forEach(element => element.style.display = "none");
 }
 
 function createPokemon(index) {
@@ -195,10 +189,9 @@ function createPokemon(index) {
     let health = null;
     let attack = null;
     let defense = null;
-    // let speed = null;
     let special_attack = null;
     let special_defense = null;
-        
+
     const xhr = new XMLHttpRequest();
 
     xhr.open('GET', url);
@@ -235,12 +228,9 @@ function createPokemon(index) {
                     case 'special-defense':
                         special_defense = item.base_stat
                             break;
-                    // case 'speed':
-                    //     speed = item.base_stat
-                    //     break;
                     default:
                         break;
-               }
+                }
             })
             
             listEl.insertAdjacentHTML('beforeend',
@@ -319,13 +309,3 @@ function setFightStats() {
     useSpecialPower1 = false;
     useSpecialPower2 = false;
 }
-
-// function getInnerText(pokemon, pokemonValues, pokemonStats) {
-//     let index = 0;
-        
-//     for (const value in pokemonValues) {
-//         pokemonValues[value] = Number(document.querySelector(`${pokemon} ${pokemonStats[index]}`).innerText);
-//         index = index + 1;
-//     }
-// }
-

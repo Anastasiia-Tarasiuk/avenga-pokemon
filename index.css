@@ -74,24 +74,31 @@ button {
 .demageWrapper1,
 .demageWrapper2 {
     position: absolute;
-    top: 0;
+    top: 25%;
     left: 0;
+}
+
+.demageImg1,
+.demageImg2 {
+    width: 100%;
+    height: auto;
 }
 
 .demageValue1,
 .demageValue2 {
     font-size: 100px;
-    font-weight: 700;
+    font-weight: 500;
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50% -50%);
+    transform: translate(-50%, -50%);
+    color: #2773ba;
 }
 
 .winner {
     text-align: center;
     color: #ffcc01;
-    font-size: 36px;
+    font-size: 36px; 
 }
 
 .logo_pokemon {
@@ -105,7 +112,6 @@ button {
     margin-top: 10px;
     margin-bottom: 20px;
     height: 20px;
-    width: 100%;
 }
 
 .start_fight_btn {
