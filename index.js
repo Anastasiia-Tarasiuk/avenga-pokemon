@@ -34,19 +34,20 @@ let pokemon1RoundStats = null;
 let pokemon2RoundStats = null;
 
 winnerNameEl.style.display = "none";
-fightEl.style = "display: none;"
+fightEl.style.display = "none";
+findPokemonButtonEl.removeAttribute('disabled');
 
 findPokemonButtonEl.addEventListener('click', onFindPokemonButtonClick);
 startFightButtonEl.addEventListener('click', onStartFightButtonClick);
 
 function onFindPokemonButtonClick() {
+    findPokemonButtonEl.setAttribute('disabled', '');
     winnerNameEl.style.display = "none";
     listEl.innerHTML = "";
     fightEl.innerHTML = "";
     round = 1;
     startFightButtonEl.innerHTML = "Start a fight";
     logoPokemonEl.style.display = "none";
-    
     
     for (let index = 0; index < 2; index++) {
         createPokemon(index);        
@@ -95,14 +96,22 @@ function onStartFightButtonClick() {
 
     if (demage1 > 0) {
         demageValue1El.textContent = demage1;
+        demageValue1El.style.fontSize = "100px"
         health1 = health1 - demage1;
         healthIndicatorEl1.style = `${(health1 < demage1) && "display: none"}; width: ${health1}px; height: 22px; position: absolute; top: 0; left: 0;`;
+    } else {
+        demageValue1El.textContent = "DEFENDED";
+        demageValue1El.style.fontSize = "35px"
     }
 
     if (demage2 > 0) {
         demageValue2El.textContent = demage2;
+        demageValue2El.style.fontSize = "100px"
         health2 = health2 - demage2;
         healthIndicatorEl2.style = `${(health2 < demage2) && "display: none"}; width: ${health2}px; height: 22px; position: absolute; top: 0; left: 0;`;
+    } else {
+        demageValue2El.textContent = "DEFENDED";
+        demageValue2El.style.fontSize = "35px"
     }
 
     if (demageValue1El.textContent !=="") {
@@ -124,11 +133,13 @@ function onStartFightButtonClick() {
             setTimeout(() => {
                 winnerCongratulate(1);
                 startFightButtonEl.style.display = "none";
+                findPokemonButtonEl.removeAttribute('disabled');
             }, 1000);
         } else {
             setTimeout(() => {
                 winnerCongratulate(2);
                 startFightButtonEl.style.display = "none";
+                findPokemonButtonEl.removeAttribute('disabled');
             }, 1000);
         }
     }
@@ -137,8 +148,8 @@ function onStartFightButtonClick() {
 function winnerCongratulate(winner) {
     fightEl.style.display = "none";
     let looserPokemon = null;
-    let winnerPokemon = null;
     let winnerName = null; 
+    let winnerPokemon = null;
     
     document.querySelector('.stats2').style.display = "none";
     document.querySelector('.stats1').style.display = "none";

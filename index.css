@@ -87,7 +87,7 @@ button {
 
 .demageValue1,
 .demageValue2 {
-    font-size: 100px;
+    /* font-size: 100px; */
     font-weight: 500;
     position: absolute;
     top: 50%;
