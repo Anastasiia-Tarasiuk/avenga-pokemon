@@ -59,6 +59,7 @@ button {
     top: 30%;
     left: 50%;
     transform: translate(-50%, -50%);
+    display: none;
 }
 
 .health1,
@@ -115,5 +116,6 @@ button {
 }
 
 .start_fight_btn {
+    display: none;
     margin-bottom: 20px;
 }
