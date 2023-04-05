@@ -87,7 +87,6 @@ button {
 
 .demageValue1,
 .demageValue2 {
-    /* font-size: 100px; */
     font-weight: 500;
     position: absolute;
     top: 50%;
@@ -100,6 +99,7 @@ button {
     text-align: center;
     color: #ffcc01;
     font-size: 36px; 
+    margin-top: 20px;
 }
 
 .logo_pokemon {
