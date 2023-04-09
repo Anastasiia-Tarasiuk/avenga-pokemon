@@ -1,4 +1,4 @@
-const template = Handlebars.compile("Handlebars <b>{{doesWhat}}</b>");
+// const template = Handlebars.compile("Handlebars <b>{{doesWhat}}</b>");
 // console.log(template({ doesWhat: "rocks!" }));
 
 const baseURL = 'https://pokeapi.co/api/v2/pokemon/';
@@ -206,7 +206,8 @@ function createPokemon(index) {
                 attack: null,
                 special_attack: null,
                 defense: null,
-                special_defense: null
+                special_defense: null,
+                index: index + 1
             }
 
             if (image_dream_world) {
@@ -241,35 +242,35 @@ function createPokemon(index) {
                         break;
                 }
             })
-            
-            listEl.insertAdjacentHTML('beforeend',
-                `<li class=${'pokemon'+(index+1)}>
-                    <p class=${"name" + (index + 1)}>${pokemonStats.name}</p>
-                    <div class="wrapper">
-                        <div class=${"health"+(index+1)} style="width: ${pokemonStats.health}px; height: 22px; position: absolute; top: 0; left: 0;"></div>
-                        <div class=${"shadow"+(index+1)} style="width: ${pokemonStats.health}px; height: 20px; position: absolute; top: 0; left: 0; border: 1px solid black;"></div>
-                    </div>
-                    <img class="pokemon_image" src="${pokemonStats.image}" />
-                    <div class=${'"demageWrapper'+(index+1)}" style="display: none">
-                        <img class=${"demageImg"+(index+1)} src="images/demage.png" alt="Demage effect">
-                        <span class=${'"demageValue'+(index+1)}"></span>
-                    </div>
-                    <div class=${"stats"+(index+1)}>
-                    <p>Health: <span class="health">${pokemonStats.health}</span></p>
-                    <p>Max Attack: <span class="attack">${pokemonStats.attack}</span></p>
-                    <p>Max Special attack: <span class="special_attack">${pokemonStats.special_attack}</span></p>
-                    <p>Max Defense: <span class="defense">${pokemonStats.defense}</span></p>
-                    <p>Max Special defense: <span class="special_defense">${pokemonStats.special_defense}</span></p>
-                    </div>
-                </li>`
-            )
 
-            fightEl.insertAdjacentHTML('beforeend', 
-                `<li class=${'pokemon_fight'+(index+1)}>
-                    <p>Attack: <span class=${"attack"+(index+1)}></span></p>
-                    <p>Defense: <span class=${"defense"+(index+1)}></span></p>
+            const templatePokemonStats = `<li class="pokemon{{index}}">
+                    <p class="name{{index}}">{{name}}</p>
+                    <div class="wrapper">
+                        <div class="health{{index}}" style="width: {{health}}px; height: 22px; position: absolute; top: 0; left: 0;"></div>
+                        <div class="shadow{{index}}" style="width: {{health}}px; height: 20px; position: absolute; top: 0; left: 0; border: 1px solid black;"></div>
+                    </div>
+                    <img class="pokemon_image" src="{{image}}" />
+                    <div class="demageWrapper{{index}}" style="display: none">
+                        <img class="demageImg{{index}}" src="images/demage.png" alt="Demage effect">
+                        <span class="demageValue{{index}}"></span>
+                    </div>
+                    <div class="stats{{index}}">
+                    <p>Health: <span class="health">{{health}}</span></p>
+                    <p>Max Attack: <span class="attack">{{attack}}</span></p>
+                    <p>Max Special attack: <span class="special_attack">{{special_attack}}</span></p>
+                    <p>Max Defense: <span class="defense">{{defense}}</span></p>
+                    <p>Max Special defense: <span class="special_defense">{{special_defense}}</span></p>
+                    </div>
+                </li >`;
+            
+            const templatePokemonFightStats = `<li class="pokemon_fight{{index}}">
+                    <p>Attack: <span class="attack{{index}}"></span></p>
+                    <p>Defense: <span class="defense{{index}}"></span></p>
                 </li>`
-            )
+
+            listEl.insertAdjacentHTML('beforeend', useHandlebars(templatePokemonStats, pokemonStats))
+
+            fightEl.insertAdjacentHTML('beforeend', useHandlebars(templatePokemonFightStats, pokemonStats))
 
             const listChildren = listEl.childNodes.length;
 
@@ -339,4 +340,9 @@ function setFightStats() {
 
     useSpecialPower1 = false;
     useSpecialPower2 = false;
+}
+
+function useHandlebars(template, obj) {
+    const templateScript = Handlebars.compile(template);
+    return templateScript(obj);
 }

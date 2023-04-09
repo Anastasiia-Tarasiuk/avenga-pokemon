@@ -27,6 +27,8 @@ ul {
 
 li {
     list-style-type: none;
+    display: block;
+    width: 300px;
 }
 
 .pokemon_image {
