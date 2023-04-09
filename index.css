@@ -25,10 +25,27 @@ ul {
     justify-content: space-evenly;
 }
 
-li {
-    list-style-type: none;
+.nameWrapper {
+    display: flex;
+}
+
+.name1,
+.name2 {
+    display: flex;
+    text-transform: uppercase;
+}
+
+.pokemonNumber {
+    margin-left: auto;
+}
+
+.fight_list li {
     display: block;
     width: 300px;
+}
+
+li {
+    list-style-type: none;
 }
 
 .pokemon_image {
@@ -72,6 +89,8 @@ button {
 .pokemon1,
 .pokemon2 {
     position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
 .demageWrapper1,
@@ -115,9 +134,19 @@ button {
     margin-top: 10px;
     margin-bottom: 20px;
     height: 20px;
+
 }
 
 .start_fight_btn {
     display: none;
     margin-bottom: 20px;
+}
+
+.no_winner{
+    display: none;
+    margin: 0 auto;
+}
+
+.find_pokemon_btn {
+    margin-bottom: 10px;
 }

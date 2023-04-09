@@ -1,6 +1,3 @@
-// const template = Handlebars.compile("Handlebars <b>{{doesWhat}}</b>");
-// console.log(template({ doesWhat: "rocks!" }));
-
 const baseURL = 'https://pokeapi.co/api/v2/pokemon/';
 
 const findPokemonButtonEl = document.querySelector('.find_pokemon_btn');
@@ -10,9 +7,9 @@ const winnerNameEl = document.querySelector('.winner');
 const fightEl = document.querySelector('.fight_list');
 const vsLogoEl = document.querySelector('.vs_logo');
 const logoPokemonEl = document.querySelector('.logo_pokemon');
+const noWinnerEl = document.querySelector('.no_winner');
 
 let round = 1;
-
 let maxHealth1 = null;
 let maxHealth2 = null;
 let maxAttack1 = null;
@@ -23,13 +20,10 @@ let maxDefense1 = null;
 let maxDefense2 = null;
 let maxSpecialDefense1 = null;
 let maxSpecialDefense2 = null;
-
 let useSpecialPower1 = false;
 let useSpecialPower2 = false;
-
 let pokemon1Stats = null;
 let pokemon2Stats = null;
-
 let pokemon1RoundStats = null;
 let pokemon2RoundStats = null;
 
@@ -48,6 +42,7 @@ function onFindPokemonButtonClick() {
     round = 1;
     startFightButtonEl.innerHTML = "Start a fight";
     logoPokemonEl.style.display = "none";
+    noWinnerEl.style.display = "none";
     
     for (let index = 0; index < 2; index++) {
         createPokemon(index);        
@@ -75,6 +70,13 @@ function onStartFightButtonClick() {
     let health1 = document.querySelector('.pokemon_list .health1').clientWidth;
     let health2 = document.querySelector('.pokemon_list .health2').clientWidth;
 
+    const demageValue1El = document.querySelector(".demageValue1");
+    const demageValue2El = document.querySelector(".demageValue2");
+    const demage1El = document.querySelector(".demageWrapper1");
+    const demage2El = document.querySelector(".demageWrapper2");
+    const healthIndicatorEl1 = document.querySelector('.pokemon_list .health1');
+    const healthIndicatorEl2 = document.querySelector('.pokemon_list .health2');
+
     setFightStats();
     
     const attack1 = pokemon1RoundStats.attack;
@@ -85,20 +87,11 @@ function onStartFightButtonClick() {
     const demage1 = attack2 - defense1;
     const demage2 = attack1 - defense2;
 
-    const demageValue1El = document.querySelector(".demageValue1");
-    const demageValue2El = document.querySelector(".demageValue2");
-
-    const demage1El = document.querySelector(".demageWrapper1");
-    const demage2El = document.querySelector(".demageWrapper2");
-
-    const healthIndicatorEl1 = document.querySelector('.pokemon_list .health1');
-    const healthIndicatorEl2 = document.querySelector('.pokemon_list .health2');
-
     if (demage1 > 0) {
         demageValue1El.textContent = demage1;
         demageValue1El.style.fontSize = "100px"
         health1 = health1 - demage1;
-        healthIndicatorEl1.style = `${(health1 < demage1) && "display: none"}; width: ${health1}px; height: 22px; position: absolute; top: 0; left: 0;`;
+        healthIndicatorEl1.style = `${(health1 <= 0) && "display: none"}; width: ${health1}px; height: 22px; position: absolute; top: 0; left: 0;`;
     } else {
         demageValue1El.textContent = "DEFENDED";
         demageValue1El.style.fontSize = "35px"
@@ -108,7 +101,7 @@ function onStartFightButtonClick() {
         demageValue2El.textContent = demage2;
         demageValue2El.style.fontSize = "100px"
         health2 = health2 - demage2;
-        healthIndicatorEl2.style = `${(health2 < demage2) && "display: none"}; width: ${health2}px; height: 22px; position: absolute; top: 0; left: 0;`;
+        healthIndicatorEl2.style = `${(health2 <= 0) && "display: none"}; width: ${health2}px; height: 22px; position: absolute; top: 0; left: 0;`;
     } else {
         demageValue2El.textContent = "DEFENDED";
         demageValue2El.style.fontSize = "35px"
@@ -125,19 +118,24 @@ function onStartFightButtonClick() {
     }
 
     if (healthIndicatorEl1.style.display === "none" || healthIndicatorEl2.style.display === "none") {
-        
         startFightButtonEl.innerHTML = "Fight is over";
         startFightButtonEl.setAttribute('disabled', '');
 
-        if (health1 > health2) {
+        if (health1 > 0 && health2 <= 0) {
             setTimeout(() => {
                 winnerCongratulate(1);
                 startFightButtonEl.style.display = "none";
                 findPokemonButtonEl.removeAttribute('disabled');
             }, 1000);
-        } else {
+        } else if (health2 > 0 && health1 <= 0) {
             setTimeout(() => {
                 winnerCongratulate(2);
+                startFightButtonEl.style.display = "none";
+                findPokemonButtonEl.removeAttribute('disabled');
+            }, 1000);
+        } else {
+            setTimeout(() => {
+                winnerCongratulate(0);
                 startFightButtonEl.style.display = "none";
                 findPokemonButtonEl.removeAttribute('disabled');
             }, 1000);
@@ -154,9 +152,6 @@ function winnerCongratulate(winner) {
     document.querySelector('.stats2').style.display = "none";
     document.querySelector('.stats1').style.display = "none";
 
-    document.querySelector('.name1').style.display = "none";
-    document.querySelector('.name2').style.display = "none";
-
     switch (winner) {
         case 1:
             looserPokemon = document.querySelector('.pokemon2');
@@ -169,16 +164,24 @@ function winnerCongratulate(winner) {
             winnerName = document.querySelector('.name2');
             break;
         default:
+            noWinnerEl.style.display = "block";
             break;
     }
 
-    looserPokemon.style.display = "none";
-    vsLogoEl.style.display = "none";
-    winnerNameEl.textContent = (`${(winnerName.textContent)} wins!`).toUpperCase();
-    winnerNameEl.style.display = "block";
+    if (winner === 1 || winner === 2) {
+        document.querySelector('.name1').style.display = "none";
+        document.querySelector('.name2').style.display = "none";
+        looserPokemon.style.display = "none";
+        vsLogoEl.style.display = "none";
+        winnerNameEl.textContent = (`${(winnerName.textContent)} wins!`).toUpperCase();
+        winnerNameEl.style.display = "block";
+        [...document.querySelectorAll('.wrapper')].forEach(element => element.style.display = "none");
+        [...document.querySelectorAll('.pokemonNumber')].forEach(element => element.style.display = "none");
+    }
+    
     findPokemonButtonEl.style.display = "block";    
-    [...document.querySelectorAll('.wrapper')].forEach(element => element.style.display = "none");
 }
+
 
 function createPokemon(index) {
     const randomNumber = getRandomNumber(1, 1008);
@@ -187,7 +190,6 @@ function createPokemon(index) {
     const xhr = new XMLHttpRequest();
 
     xhr.open('GET', url);
-
     xhr.send();
     
     xhr.onload = function () {        
@@ -201,6 +203,7 @@ function createPokemon(index) {
 
             const pokemonStats = {
                 name: response.name,
+                pokemonNumber: randomNumber,
                 health: null,
                 image: null,
                 attack: null,
@@ -244,7 +247,10 @@ function createPokemon(index) {
             })
 
             const templatePokemonStats = `<li class="pokemon{{index}}">
-                    <p class="name{{index}}">{{name}}</p>
+                    <div class="nameWrapper">
+                        <p class="name{{index}}">{{name}}</p>
+                        <p class="pokemonNumber">#{{pokemonNumber}}</p>
+                    </div>
                     <div class="wrapper">
                         <div class="health{{index}}" style="width: {{health}}px; height: 22px; position: absolute; top: 0; left: 0;"></div>
                         <div class="shadow{{index}}" style="width: {{health}}px; height: 20px; position: absolute; top: 0; left: 0; border: 1px solid black;"></div>
@@ -268,9 +274,9 @@ function createPokemon(index) {
                     <p>Defense: <span class="defense{{index}}"></span></p>
                 </li>`
 
-            listEl.insertAdjacentHTML('beforeend', useHandlebars(templatePokemonStats, pokemonStats))
+            listEl.insertAdjacentHTML('beforeend', useHandlebars(templatePokemonStats, pokemonStats));
 
-            fightEl.insertAdjacentHTML('beforeend', useHandlebars(templatePokemonFightStats, pokemonStats))
+            fightEl.insertAdjacentHTML('beforeend', useHandlebars(templatePokemonFightStats, pokemonStats));
 
             const listChildren = listEl.childNodes.length;
 
@@ -324,7 +330,6 @@ function setFightStats() {
 
     document.querySelector('.pokemon_fight1 .attack1').textContent = attack1;
     document.querySelector('.pokemon_fight1 .defense1').textContent = defense1;
-
     document.querySelector('.pokemon_fight2 .attack2').textContent = attack2;
     document.querySelector('.pokemon_fight2 .defense2').textContent = defense2;
 
